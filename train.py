@@ -27,7 +27,7 @@ def parse_args(check=True):
     parser.add_argument('--dataset_dir', type=str,default='')
     parser.add_argument('--logs_train_dir', type=str, default='')
     parser.add_argument('--checkpoint_dir', type=str, default='')    
-    parser.add_argument('--checkpoint_exclude_scopes', type=str, default='vgg_16/fc8,vgg_16_advers')
+    parser.add_argument('--checkpoint_exclude_scopes', type=str, default='')
     parser.add_argument('--number_of_classes', type=int,default=764)
     parser.add_argument('--hide_prob', type=float, default=0.25)
     parser.add_argument('--sigma', type=float, default=0.5)
@@ -41,7 +41,10 @@ def parse_args(check=True):
 
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()
-    
+    print('checkpoint_exclude_scopes',FLAGS.checkpoint_exclude_scopes)
+    print('dataset_dir',FLAGS.dataset_dir)
+    print('logs_train_dir',FLAGS.logs_train_dir)
+    print('checkpoint_dir',FLAGS.checkpoint_dir)
     run_training(num_epoc=FLAGS.num_epoc,\
                  number_of_classes = FLAGS.number_of_classes,\
                  sigma = FLAGS.sigma,\
