@@ -23,8 +23,8 @@ def parse_args(check=True):
     parser.add_argument('--checkpoint_dir', type=str, default=' ')    
     parser.add_argument('--number_of_classes', type=int,default= 764)
     parser.add_argument('--sigma', type=float, default= 0.5)
-    parser.add_argument('--val_loop', type=int,default= 128)
-    parser.add_argument('--batch_size', type=int, default= 32)
+    parser.add_argument('--val_loop', type=int,default= 256)
+    parser.add_argument('--batch_size', type=int, default= 16)
 
     FLAGS, unparsed = parser.parse_known_args()
     return FLAGS, unparsed

@@ -23,20 +23,24 @@ def parse_args(check=True):
     parser.add_argument('--num_epoc', type=int, default=1)
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--num_train_img', type=int, default=43971)
-    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--number_of_classes', type=int,default=764)
     parser.add_argument('--hide_prob', type=float, default = 0.25)
     parser.add_argument('--sigma', type=float, default = 0.5)
     # eval
-    parser.add_argument('--val_loop', type=int,default=128)
+    parser.add_argument('--val_loop', type=int,default=256)
 
     FLAGS, unparsed = parser.parse_known_args()
     return FLAGS, unparsed
 
 
-train_cmd = 'python ./train.py   --dataset_dir={dataset_dir}  --logs_train_dir={logs_train_dir}  --checkpoint_dir={checkpoint_dir}  --checkpoint_exclude_scopes={checkpoint_exclude_scopes}  --num_epoc={num_epoc}  --learning_rate={learning_rate}  --num_train_img={num_train_img}  --batch_size={batch_size}  --number_of_classes={number_of_classes}  --hide_prob={hide_prob}  --sigma={sigma} '
+train_cmd = 'python ./train.py   --dataset_dir={dataset_dir}  --logs_train_dir={logs_train_dir} \
+              --checkpoint_dir={checkpoint_dir}  --checkpoint_exclude_scopes={checkpoint_exclude_scopes}  --num_epoc={num_epoc}  \
+              --learning_rate={learning_rate}  --num_train_img={num_train_img} \
+              --batch_size={batch_size} --number_of_classes={number_of_classes} --hide_prob={hide_prob} --sigma={sigma} '
 
-eval_cmd = 'python ./eval.py   --dataset_dir={dataset_dir}  --checkpoint_dir={checkpoint_dir}  --number_of_classes={number_of_classes}   --sigma={sigma}  --val_loop={val_loop} --batch_size={batch_size} '
+eval_cmd = 'python ./eval.py   --dataset_dir={dataset_dir}  --checkpoint_dir={checkpoint_dir}  \
+            --number_of_classes={number_of_classes}   --sigma={sigma}  --val_loop={val_loop} --batch_size={batch_size} '
 
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()

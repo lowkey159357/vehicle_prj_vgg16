@@ -34,17 +34,13 @@ def parse_args(check=True):
     parser.add_argument('--num_epoc', type=int,default=1)
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--num_train_img', type=int, default=43971)
-    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--batch_size', type=int, default=16)
 
     FLAGS, unparsed = parser.parse_known_args()
     return FLAGS, unparsed
 
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()
-    print('***checkpoint_exclude_scopes******',FLAGS.checkpoint_exclude_scopes)
-    print('******dataset_dir******',FLAGS.dataset_dir)
-    print('******logs_train_dir******',FLAGS.logs_train_dir)
-    print('******checkpoint_dir******',FLAGS.checkpoint_dir)
     run_training(num_epoc=FLAGS.num_epoc,\
                  number_of_classes = FLAGS.number_of_classes,\
                  sigma = FLAGS.sigma,\
@@ -55,7 +51,7 @@ if __name__ == '__main__':
                  dataset_dir=FLAGS.dataset_dir,\
                  logs_train_dir=FLAGS.logs_train_dir,\
                  checkpoint_dir=FLAGS.checkpoint_dir,\
-                 checkpoint_exclude_scopes=FLAGS.checkpoint_exclude_scopes)
+                 checkpoint_exclude_scopes='vgg_16_advers,vgg_16/fc8')
 
     
     

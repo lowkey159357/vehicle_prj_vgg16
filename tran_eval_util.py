@@ -204,7 +204,7 @@ def evaluation(logits, labels_hot):
         #correct = tf.nn.in_top_k(logits, labels, 1)
         #correct = tf.cast(correct, tf.float16)
         #accuracy = tf.reduce_mean(correct)
-        tf.summary.scalar(scope.name + "accuracy", accuracy)
+        tf.summary.scalar(scope.name + "/accuracy", accuracy)
     return accuracy
     
     
@@ -334,13 +334,13 @@ def run_training(number_of_classes = 5,\
                                                            train_accuracy,summary_op],\
                                                           feed_dict=feed_vars)
                 #每迭代50次，打印出一次结果
-                if step %  20 == 0:
-                    print('epoc %d, Step %d, total_loss = %.5f, cl_loss=%.5f, adver_loss=%.5f, amin_loss=%.5f, L2_loss=%.5f, accuracy = %.3f, %.3f sec/step'\
-                                      %((step*batch_size)//num_train_img, _global_step, _total_loss,_logit_cl_loss,_logit_adver_loss,\
+                if step %  50 == 0:
+                    print('Step %d, total_loss = %.2f, cl_loss=%.2f, adver_loss=%.2f, amin_loss=%.5f, L2_loss=%.2f, accuracy = %.2f, %.2f sec/step'\
+                                      %(_global_step, _total_loss,_logit_cl_loss,_logit_adver_loss,\
                                         _logit_amin_loss,_L2_loss,_accuracy,(time.time()-start_time)/(step+1e-5) )) 
                     train_writer.add_summary(summary_str,_global_step)
-                #每迭代200次，利用saver.save()保存一次模型文件，以便测试的时候使用
-                if ((step % 450 ==0) and step>0) or (step +1) == MAX_STEP:
+                #每迭代700次，利用saver.save()保存一次模型文件，以便测试的时候使用
+                if ((step % 700 ==0) and step>0) or (step +1) == MAX_STEP:
                     checkpoint_path = os.path.join(logs_train_dir,'model.ckpt')
                     saver.save(sess,checkpoint_path, global_step = _global_step)
 
