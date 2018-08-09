@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# coding: utf-8 
+#coding: utf-8
 
 from __future__ import absolute_import
 from __future__ import division
@@ -7,8 +7,6 @@ from __future__ import print_function
 
 import argparse
 import os
-import sys
-
 
 #dataset_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\image_dataset"
 #logs_train_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\out_log"

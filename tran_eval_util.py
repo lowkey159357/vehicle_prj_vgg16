@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# encoding:utf-8
+#coding: utf-8
 
 from __future__ import absolute_import
 from __future__ import division
@@ -25,8 +25,6 @@ from tensorflow.python.ops import gen_nn_ops
 def _GuidedReluGrad(op, grad):
     return tf.where(0. < grad, gen_nn_ops._relu_grad(grad, op.outputs[0]), tf.zeros(grad.get_shape()))
 
-import sys
-sys.setdefaultencoding('utf-8')
 
 def patch_epock_img(img= None,step=0, epock_step=3, hide_prob=0.3):
     global patch_num          # 静态变量，很关键
@@ -338,9 +336,8 @@ def run_training(number_of_classes = 5,\
                 #每迭代50次，打印出一次结果
                 if step %  20 == 0:
                     print('epoc %d, Step %d, total_loss = %.5f, cl_loss==%.5f, adver_loss=%.5f, amin_loss=%.5f, L2_loss=%.5f, accuracy = %.3f，（%.3f sec/step）'\
-                          %((step*batch_size)//num_train_img, _global_step, _total_loss,\
-                            _logit_cl_loss,_logit_adver_loss,_logit_amin_loss,_L2_loss,_accuracy,\
-                            (time.time()-start_time)/(step+1e-5) )) 
+                                      %((step*batch_size)//num_train_img, _global_step, _total_loss,_logit_cl_loss,_logit_adver_loss,\
+                                        _logit_amin_loss,_L2_loss,_accuracy,(time.time()-start_time)/(step+1e-5) )) 
                     train_writer.add_summary(summary_str,_global_step)
                 #每迭代200次，利用saver.save()保存一次模型文件，以便测试的时候使用
                 if ((step % 450 ==0) and step>0) or (step +1) == MAX_STEP:
@@ -351,7 +348,7 @@ def run_training(number_of_classes = 5,\
             coord.join(threads)
         sess.close()
         
-    print('time use is %s second'%(time.time()-start_time)) 
+    print('time use is %d second'%(time.time()-start_time)) 
 
 	
 	
@@ -433,5 +430,5 @@ def run_test(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint
         
         aver_accuracy=sum(accuracy_list)/len(accuracy_list)
         print('At last, test, aver_accuracy:%.4f'%(aver_accuracy) )
-        print('time use is %s second'%(time.time()-start_time)) 
+        print('time use is %d second'%(time.time()-start_time)) 
         return aver_accuracy	
