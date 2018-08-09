@@ -402,6 +402,7 @@ def run_eval(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint
             ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
             if ckpt and ckpt.model_checkpoint_path:
                 saver.restore(sess, ckpt.model_checkpoint_path)
+                print('checkpoint restored from [{0}]'.format(ckpt.model_checkpoint_path))
                 print('model_checkpoint_path Loading success')
             else:
                 print('No checkpoint before training')
@@ -431,4 +432,4 @@ def run_eval(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint
         aver_accuracy=sum(accuracy_list)/len(accuracy_list)
         print('At last, test, aver_accuracy:%.4f'%(aver_accuracy) )
         print('time use is %d second'%(time.time()-start_time)) 
-        return aver_accuracy	
+        return  aver_accuracy
