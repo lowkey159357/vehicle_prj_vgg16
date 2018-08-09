@@ -442,7 +442,8 @@ def run_test(loop_max = 1,\
         prob_max_adver = tf.argmax(prob_adver,1)
         # 
         config = tf.ConfigProto()                                    # 配置GPU参数 
-        config.gpu_options.per_process_gpu_memory_fraction = 0.85   # 占用GPU90%的显存 
+        config.gpu_options.allow_growth=True                         # 动态分配GPU资源   
+        #config.gpu_options.per_process_gpu_memory_fraction = 0.85   # 占用GPU90%的显存 
         sess = tf.Session(config=config)
         #  
         start_time = time.time()

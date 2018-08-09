@@ -282,8 +282,8 @@ def run_training(number_of_classes = 5,\
         train_accuracy = (evaluation(logits_cl,label_hot) + evaluation(logits_adver,label_advers_hot))/2.0
         # 
         config = tf.ConfigProto()                                    # 配置GPU参数 
-        #config.gpu_options.allow_growth=True                       # 动态分配GPU资源   
-        config.gpu_options.per_process_gpu_memory_fraction = 0.85   # 占用GPU90%的显存 
+        config.gpu_options.allow_growth=True                         # 动态分配GPU资源   
+        #config.gpu_options.per_process_gpu_memory_fraction = 0.85   # 占用GPU90%的显存 
         sess = tf.Session(config=config)
         #  
         summary_op = tf.summary.merge_all()
@@ -394,7 +394,8 @@ def run_test(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint
         prob_adver_max=tf.argmax(tf.nn.softmax(logits_adver),1)
         # 
         config = tf.ConfigProto()                                    # 配置GPU参数 
-        config.gpu_options.per_process_gpu_memory_fraction = 0.85   # 占用GPU90%的显存 
+        config.gpu_options.allow_growth=True                         # 动态分配GPU资源   
+        #config.gpu_options.per_process_gpu_memory_fraction = 0.85   # 占用GPU90%的显存 
         sess = tf.Session(config=config)
         #  
         start_time = time.time()
