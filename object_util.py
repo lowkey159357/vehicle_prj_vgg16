@@ -14,10 +14,6 @@ import tensorflow as tf
 slim = tf.contrib.slim
 
 import cv2 
-import skimage
-import skimage.io
-import skimage.transform
-from skimage.transform import resize
 from PIL import Image, ImageDraw, ImageFont
 
 from matplotlib import pyplot as plt
