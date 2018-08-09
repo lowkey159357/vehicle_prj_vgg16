@@ -289,7 +289,7 @@ def run_training(number_of_classes = 5,\
             coord=tf.train.Coordinator()
             threads= tf.train.start_queue_runners(coord=coord) 
             
-            saver = tf.train.Saver(tf.all_variables())
+            saver = tf.train.Saver()
             exclusions = []
             if checkpoint_exclude_scopes:
                 exclusions = [scope.strip() for scope in checkpoint_exclude_scopes.split(',')]
@@ -398,7 +398,7 @@ def run_eval(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint
             coord=tf.train.Coordinator()
             threads= tf.train.start_queue_runners(coord=coord) 
             
-            saver = tf.train.Saver(tf.all_variables()) 
+            saver = tf.train.Saver( ) 
             ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
             if ckpt and ckpt.model_checkpoint_path:
                 saver.restore(sess, ckpt.model_checkpoint_path)
