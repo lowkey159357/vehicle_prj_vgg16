@@ -18,7 +18,7 @@ from tran_eval_util import run_training
 #dataset_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\image_dataset"
 #logs_train_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\out_log"
 #checkpoint_dir=os.path.join(logs_train_dir, 'model.ckpt-89560')
-#checkpoint_exclude_scopes='vgg_16/fc8, vgg_16_advers'.encode('utf-8')
+#checkpoint_exclude_scopes='vgg_16/fc8, vgg_16_advers'
 
 
 def parse_args(check=True):
@@ -27,7 +27,7 @@ def parse_args(check=True):
     parser.add_argument('--dataset_dir', type=str,default='')
     parser.add_argument('--logs_train_dir', type=str, default='')
     parser.add_argument('--checkpoint_dir', type=str, default='')    
-    parser.add_argument('--checkpoint_exclude_scopes', type=str, default= 'vgg_16/fc8, vgg_16_advers'.encode('utf-8'))
+    parser.add_argument('--checkpoint_exclude_scopes', type=str, default='vgg_16/fc8,vgg_16_advers'.encode('utf-8'))
     parser.add_argument('--number_of_classes', type=int,default=764)
     parser.add_argument('--hide_prob', type=float, default=0.25)
     parser.add_argument('--sigma', type=float, default=0.5)
