@@ -51,7 +51,7 @@ if __name__ == '__main__':
                  dataset_dir=FLAGS.dataset_dir,\
                  logs_train_dir=FLAGS.logs_train_dir,\
                  checkpoint_dir=FLAGS.checkpoint_dir,\
-                 checkpoint_exclude_scopes='vgg_16_advers,vgg_16/fc8')
+                 checkpoint_exclude_scopes='vgg_16_advers')
 
     
     
