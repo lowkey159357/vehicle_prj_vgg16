@@ -41,10 +41,10 @@ def parse_args(check=True):
 
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()
-    print('checkpoint_exclude_scopes',FLAGS.checkpoint_exclude_scopes)
-    print('dataset_dir',FLAGS.dataset_dir)
-    print('logs_train_dir',FLAGS.logs_train_dir)
-    print('checkpoint_dir',FLAGS.checkpoint_dir)
+    print('***checkpoint_exclude_scopes******',FLAGS.checkpoint_exclude_scopes)
+    print('******dataset_dir******',FLAGS.dataset_dir)
+    print('******logs_train_dir******',FLAGS.logs_train_dir)
+    print('******checkpoint_dir******',FLAGS.checkpoint_dir)
     run_training(num_epoc=FLAGS.num_epoc,\
                  number_of_classes = FLAGS.number_of_classes,\
                  sigma = FLAGS.sigma,\
