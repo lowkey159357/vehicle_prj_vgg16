@@ -36,11 +36,11 @@ def parse_args(check=True):
 
 train_cmd = 'python ./train.py   --dataset_dir={dataset_dir}  --logs_train_dir={logs_train_dir} \
               --checkpoint_dir={checkpoint_dir}  --checkpoint_exclude_scopes={checkpoint_exclude_scopes}  --num_epoc={num_epoc}  \
-              --learning_rate={learning_rate}  --num_train_img={num_train_img} \
+              --learning_rate={learning_rate}  --num_train_img={num_train_img}  \
               --batch_size={batch_size} --number_of_classes={number_of_classes} --hide_prob={hide_prob} --sigma={sigma} '
 
-eval_cmd = 'python ./eval.py   --dataset_dir={dataset_dir}  --checkpoint_dir={checkpoint_dir}  \
-            --number_of_classes={number_of_classes}   --sigma={sigma}  --val_loop={val_loop} --batch_size={batch_size} '
+eval_cmd = 'python ./eval.py   --dataset_dir={dataset_dir}  --checkpoint_dir={checkpoint_dir}  \ 
+             --number_of_classes={number_of_classes}   --sigma={sigma}  --val_loop={val_loop} --batch_size={batch_size} '
 
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()
