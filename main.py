@@ -18,7 +18,7 @@ def parse_args(check=True):
     parser.add_argument('--dataset_dir', type=str,default=' ')
     parser.add_argument('--logs_train_dir', type=str, default=' ')
     parser.add_argument('--checkpoint_dir', type=str, default=' ') 
-	parser.add_argument('--max_epoc', type=int, default=66)
+    parser.add_argument('--max_epoc', type=int, default=66)
     parser.add_argument('--num_epoc', type=int, default=1)
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--num_train_img', type=int, default=43971)
