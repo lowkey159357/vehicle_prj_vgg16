@@ -8,6 +8,10 @@ from __future__ import print_function
 import argparse
 import os
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 #dataset_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\image_dataset"
 #logs_train_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\out_log"
 #checkpoint_dir=os.path.join(logs_train_dir, 'model.ckpt-89560')
