@@ -18,6 +18,7 @@ def parse_args(check=True):
     parser.add_argument('--dataset_dir', type=str,default=' ')
     parser.add_argument('--logs_train_dir', type=str, default=' ')
     parser.add_argument('--checkpoint_dir', type=str, default=' ') 
+    parser.add_argument('--checkpoint_exclude_scopes', type=str, default=' ')
     parser.add_argument('--max_epoc', type=int, default=66)
     parser.add_argument('--num_epoc', type=int, default=1)
     parser.add_argument('--learning_rate', type=float, default=0.001)
@@ -34,7 +35,7 @@ def parse_args(check=True):
 
 
 train_cmd = 'python ./train.py   --dataset_dir={dataset_dir}  --logs_train_dir={logs_train_dir}  \
-              --checkpoint_dir={checkpoint_dir}  --num_epoc={num_epoc} \
+              --checkpoint_dir={checkpoint_dir}  --checkpoint_exclude_scopes={checkpoint_exclude_scopes}  --num_epoc={num_epoc}  \
               --learning_rate={learning_rate}  --num_train_img={num_train_img}  --batch_size={batch_size} \
               --number_of_classes={number_of_classes} --hide_prob={hide_prob} --sigma={sigma} '
 
@@ -53,8 +54,8 @@ if __name__ == '__main__':
         # train 1 epoch
         print('################    train    ################')
         p = os.popen(train_cmd.format(**{'dataset_dir': FLAGS.dataset_dir, 'logs_train_dir': FLAGS.logs_train_dir,
-                                         'checkpoint_dir': FLAGS.checkpoint_dir, 'num_epoc': FLAGS.num_epoc,
-                                         'learning_rate': FLAGS.learning_rate, 'num_train_img': FLAGS.num_train_img,
+                                         'checkpoint_dir': FLAGS.checkpoint_dir,'checkpoint_exclude_scopes': FLAGS.checkpoint_exclude_scopes,
+                                         'num_epoc': FLAGS.num_epoc,'learning_rate': FLAGS.learning_rate, 'num_train_img': FLAGS.num_train_img,
                                          'batch_size': FLAGS.batch_size, 'number_of_classes': FLAGS.number_of_classes,
                                          'hide_prob': FLAGS.hide_prob, 'sigma': FLAGS.sigma}))
         for l in p:

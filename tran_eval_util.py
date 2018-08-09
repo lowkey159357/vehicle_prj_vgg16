@@ -335,7 +335,7 @@ def run_training(number_of_classes = 5,\
                                                           feed_dict=feed_vars)
                 #每迭代50次，打印出一次结果
                 if step %  20 == 0:
-                    print('epoc %d, Step %d, total_loss = %.5f, cl_loss=%.5f, adver_loss=%.5f, amin_loss=%.5f, L2_loss=%.5f, accuracy = %.3f, %.3f sec/step'.encode('utf-8')\
+                    print('epoc %d, Step %d, total_loss = %.5f, cl_loss=%.5f, adver_loss=%.5f, amin_loss=%.5f, L2_loss=%.5f, accuracy = %.3f, %.3f sec/step'\
                                       %((step*batch_size)//num_train_img, _global_step, _total_loss,_logit_cl_loss,_logit_adver_loss,\
                                         _logit_amin_loss,_L2_loss,_accuracy,(time.time()-start_time)/(step+1e-5) )) 
                     train_writer.add_summary(summary_str,_global_step)
