@@ -17,7 +17,8 @@ def parse_args(check=True):
     # train
     parser.add_argument('--dataset_dir', type=str,default=' ')
     parser.add_argument('--logs_train_dir', type=str, default=' ')
-    parser.add_argument('--checkpoint_dir', type=str, default=' ')    
+    parser.add_argument('--checkpoint_dir', type=str, default=' ') 
+	parser.add_argument('--max_epoc', type=int, default=66)
     parser.add_argument('--num_epoc', type=int, default=1)
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--num_train_img', type=int, default=43971)
@@ -43,12 +44,11 @@ eval_cmd = 'python ./eval.py   --dataset_dir={dataset_dir}  --checkpoint_dir={ch
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()
     print('current working dir [{0}]'.format(os.getcwd()))
-    #w_d = os.path.dirname(os.path.abspath(__file__))
-    #print('change wording dir to [{0}]'.format(w_d))
-    #os.chdir(w_d)
+    w_d = os.path.dirname(os.path.abspath(__file__))
+    print('change wording dir to [{0}]'.format(w_d))
+    os.chdir(w_d)
 
-
-    for i in range(66):
+    for i in range(FLAGS.max_epoc):
         print('***************************epock {}*********************************'.format(i))
         # train 1 epoch
         print('################    train    ################')

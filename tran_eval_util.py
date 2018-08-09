@@ -347,7 +347,7 @@ def run_training(number_of_classes = 5,\
                             (time.time()-start_time)/(step+1e-5) )) 
                     train_writer.add_summary(summary_str,_global_step)
                 #每迭代200次，利用saver.save()保存一次模型文件，以便测试的时候使用
-                if ((step % 400 ==0) and step>0) or (step +1) == MAX_STEP:
+                if ((step % 450 ==0) and step>0) or (step +1) == MAX_STEP:
                     checkpoint_path = os.path.join(logs_train_dir,'model.ckpt')
                     saver.save(sess,checkpoint_path, global_step = _global_step)
 
