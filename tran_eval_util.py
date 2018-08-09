@@ -26,8 +26,7 @@ def _GuidedReluGrad(op, grad):
     return tf.where(0. < grad, gen_nn_ops._relu_grad(grad, op.outputs[0]), tf.zeros(grad.get_shape()))
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+sys.setdefaultencoding('utf-8')
 
 def patch_epock_img(img= None,step=0, epock_step=3, hide_prob=0.3):
     global patch_num          # 静态变量，很关键
