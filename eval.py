@@ -11,7 +11,7 @@ import time
 import tensorflow as tf
 import argparse
 
-from tran_eval_util import run_test
+from tran_eval_util import run_eval
 
 #dataset_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\image_dataset"
 #checkpoint_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\out_log"
@@ -31,7 +31,7 @@ def parse_args(check=True):
 
 if __name__ == '__main__':
     FLAGS, unparsed = parse_args()
-    run_test(val_loop = FLAGS.val_loop,\
+    run_eval(val_loop = FLAGS.val_loop,\
              number_of_classes = FLAGS.number_of_classes,\
              batch_size = FLAGS.batch_size,\
              sigma = FLAGS.sigma,\
