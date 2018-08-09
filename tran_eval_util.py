@@ -352,7 +352,7 @@ def run_training(number_of_classes = 5,\
 
 	
 	
-def run_test(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint_dir=None,dataset_dir=None):
+def run_eval(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint_dir=None,dataset_dir=None):
    
     #定义输入变量
     tf.reset_default_graph()
