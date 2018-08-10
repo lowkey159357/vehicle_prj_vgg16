@@ -26,7 +26,7 @@ def parse_args(check=True):
     parser.add_argument('--number_of_classes', type=int,default=764)
     parser.add_argument('--hide_prob', type=float, default=0.25)
     parser.add_argument('--sigma', type=float, default=0.5)
-    parser.add_argument('--num_epoc', type=int,default=1)
+    parser.add_argument('--num_epoc', type=int,default=5)
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--num_train_img', type=int, default=43971)
     parser.add_argument('--batch_size', type=int, default=16)
