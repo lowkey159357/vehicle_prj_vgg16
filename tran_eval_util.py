@@ -166,7 +166,7 @@ def batch_mask_images(batch_size=1,img_input=None,\
     return mask_conv_imgs,mask_input_imgs 
 
 
-def losses(logits_cl,logits_adver,logits_amin,labels_hot,label_advers_hot,number_of_classes):
+def losses(logits_cl,logits_adver,labels_hot,label_advers_hot,number_of_classes):
     with tf.variable_scope("loss") as scope:
         # logit_cl_loss
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits_cl,labels=labels_hot)
@@ -174,18 +174,14 @@ def losses(logits_cl,logits_adver,logits_amin,labels_hot,label_advers_hot,number
         # logit_adver_loss
         cross_entropy2 = tf.nn.softmax_cross_entropy_with_logits(logits=logits_adver,labels=label_advers_hot)
         logit_adver_loss = tf.reduce_mean(cross_entropy2, name="logit_adver_loss")             
-        # logit_amin_loss
-        logits_amin=tf.nn.sigmoid(logits_amin)
-        logit_amin_loss = 1*tf.reduce_mean(tf.multiply(logits_amin, labels_hot),name="logit_amin_loss")
-        #logit_amin_loss = tf.reduce_sum(tf.multiply(logits_amin, labels_hot))    
+    
         # regularization_loss
         regularization_loss = 1*tf.add_n(slim.losses.get_regularization_losses())  
         # total_loss
-        total_loss = logit_cl_loss + logit_adver_loss + logit_amin_loss + regularization_loss
+        total_loss = logit_cl_loss + logit_adver_loss + regularization_loss
         
         tf.summary.scalar(scope.name + "/logit_cl_loss", logit_cl_loss)
         tf.summary.scalar(scope.name + "/logit_adver_loss", logit_adver_loss)
-        tf.summary.scalar(scope.name + "/logit_amin_loss", logit_amin_loss)
         tf.summary.scalar(scope.name + "/regularization_loss", regularization_loss)
         tf.summary.scalar(scope.name + "/total_loss", total_loss)     
     return total_loss,logit_cl_loss,logit_adver_loss,logit_amin_loss,regularization_loss  
@@ -246,8 +242,8 @@ def run_training(number_of_classes = 5,\
                                                                                             layer_name=layer_name1,\
                                                                                             Training=True)   
         conv_in=end_points[layer_name1]
-        mask_conv_imgs,mask_input_imgs=batch_mask_images(batch_size=batch_size,\
-                                                         img_input = x_img_in,\
+        mask_conv_imgs,_=batch_mask_images(batch_size=batch_size,\
+                                                         img_input = None,\
                                                          img_conv = conv_in,\
                                                          target_conv_layer=target_conv_layer,\
                                                          target_grad_ac=target_grad_ac,\
@@ -258,16 +254,9 @@ def run_training(number_of_classes = 5,\
                                                    label_index = label_advers,\
                                                    number_of_classes = number_of_classes,\
                                                    Training = True)
-        
-        _,_,_,logits_cl_amin,_ = forward_tran(x_img=mask_input_imgs,\
-                                              label_index=x_label,\
-                                              number_of_classes=number_of_classes,\
-                                              layer_name=layer_name1,\
-                                              Training=True)   
-        
-        total_loss,logit_cl_loss,logit_adver_loss,logit_amin_loss,L2_loss = losses(logits_cl,\
+            
+        total_loss,logit_cl_loss,logit_adver_loss,L2_loss = losses(logits_cl,\
                                                                    logits_adver,\
-                                                                   logits_cl_amin,\
                                                                    label_hot,\
                                                                    label_advers_hot,\
                                                                    number_of_classes)
@@ -303,7 +292,7 @@ def run_training(number_of_classes = 5,\
                         break
                 if not excluded:
                     variables_to_restore.append(var)    
-            
+            print('*******run_trainging11*******')
             ckpt = tf.train.get_checkpoint_state(logs_train_dir)
             if ckpt and ckpt.model_checkpoint_path:
                 saver.restore(sess, ckpt.model_checkpoint_path)
@@ -316,7 +305,7 @@ def run_training(number_of_classes = 5,\
             else: 
                 print('No checkpoint before training')
                 pass
-            
+            print('******run_training12******')
             one_epock_step=num_train_img//batch_size
             MAX_STEP=num_epoc*one_epock_step
             for step in range(num_epoc*num_train_img//batch_size):
@@ -327,31 +316,28 @@ def run_training(number_of_classes = 5,\
                                             hide_prob=hide_prob)
                                 
                 feed_vars={x_img_in:_img_train,x_label:_label_train }
-                _global_step,_, _total_loss,_logit_cl_loss,_logit_adver_loss,_logit_amin_loss,\
+                _global_step, _ , _total_loss,_logit_cl_loss, _logit_adver_loss,\
                 _L2_loss,_accuracy,summary_str = sess.run([global_step,train_op,total_loss,\
                                                            logit_cl_loss,logit_adver_loss,\
-                                                           logit_amin_loss,L2_loss,\
-                                                           train_accuracy,summary_op],\
-                                                          feed_dict=feed_vars)
+                                                           L2_loss,train_accuracy,summary_op],\
+                                                           feed_dict=feed_vars)
                 #每迭代50次，打印出一次结果
                 if step %  50 == 0:
-                    print('Step %d, total_loss = %.2f, cl_loss=%.2f, adver_loss=%.2f, amin_loss=%.5f, L2_loss=%.2f, accuracy = %.2f, %.2f sec/step'\
-                                      %(_global_step, _total_loss,_logit_cl_loss,_logit_adver_loss,\
-                                        _logit_amin_loss,_L2_loss,_accuracy,(time.time()-start_time)/(step+1e-5) )) 
+                    print('Step %d, total_loss = %.2f, cl_loss=%.2f, adver_loss=%.2f, L2_loss=%.2f, accuracy = %.3f'\
+                          %(_global_step, _total_loss,_logit_cl_loss, _logit_adver_loss, _L2_loss, _accuracy )) 
                     train_writer.add_summary(summary_str,_global_step)
                 #每迭代700次，利用saver.save()保存一次模型文件，以便测试的时候使用
-                if ((step % 700 ==0) and step>0) or (step +1) == MAX_STEP:
-                    checkpoint_path = os.path.join(logs_train_dir,'model.ckpt')
-                    saver.save(sess,checkpoint_path, global_step = _global_step)
-
+                if ((step % 800 ==0) and step>0) or (step +1) == MAX_STEP:
+                    checkpoint_path = os.path.join(logs_train_dir,'modelvgg.ckpt')
+                    saver.save(sess,checkpoint_path)
+                    print('%.2f sec/step'.format((time.time()-start_time)/(step+1e-5)))
             coord.request_stop()
             coord.join(threads)
         sess.close()
         
     print('time use is %d second'%(time.time()-start_time)) 
 
-	
-	
+
 def run_eval(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint_dir=None,dataset_dir=None):
    
     #定义输入变量
@@ -398,7 +384,7 @@ def run_eval(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint
             coord=tf.train.Coordinator()
             threads= tf.train.start_queue_runners(coord=coord) 
             
-            saver = tf.train.Saver( ) 
+            saver = tf.train.Saver() 
             ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
             if ckpt and ckpt.model_checkpoint_path:
                 saver.restore(sess, ckpt.model_checkpoint_path)

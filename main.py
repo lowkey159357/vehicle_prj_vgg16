@@ -19,8 +19,8 @@ def parse_args(check=True):
     parser.add_argument('--logs_train_dir', type=str, default=' ')
     parser.add_argument('--checkpoint_dir', type=str, default=' ') 
     parser.add_argument('--checkpoint_exclude_scopes', type=str, default=' ')
-    parser.add_argument('--max_epoc', type=int, default=66)
-    parser.add_argument('--num_epoc', type=int, default=1)
+    parser.add_argument('--max_epoc', type=int, default=(65//5))
+    parser.add_argument('--num_epoc', type=int, default=5)
     parser.add_argument('--learning_rate', type=float, default=0.001)
     parser.add_argument('--num_train_img', type=int, default=43971)
     parser.add_argument('--batch_size', type=int, default=16)
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     os.chdir(w_d)
 
     for i in range(FLAGS.max_epoc):
-        print('***************************epock {}*********************************'.format(i))
+        print('***************************epock {}*********************************'.format(i*5))
         # train 1 epoch
         print('################    train    ################')
         p = os.popen(train_cmd.format(**{'dataset_dir': FLAGS.dataset_dir, 'logs_train_dir': FLAGS.logs_train_dir,

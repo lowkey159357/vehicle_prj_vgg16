@@ -449,7 +449,7 @@ def run_test(loop_max = 1,\
             coord=tf.train.Coordinator()
             threads= tf.train.start_queue_runners(coord=coord) 
 
-            saver = tf.train.Saver(tf.all_variables()) 
+            saver = tf.train.Saver( ) 
             ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
             if ckpt and ckpt.model_checkpoint_path:
                 saver.restore(sess, ckpt.model_checkpoint_path)
