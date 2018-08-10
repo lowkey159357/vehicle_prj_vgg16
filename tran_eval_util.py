@@ -315,7 +315,7 @@ def run_training(number_of_classes = 5,\
                 patch_img = patch_epock_img(img= _img_train,step=step,epock_step=one_epock_step,\
                                             hide_prob=hide_prob)
                                 
-                feed_vars={x_img_in:_img_train,x_label:_label_train }
+                feed_vars={x_img_in:patch_img,x_label:_label_train }
                 _global_step, _ , _total_loss,_logit_cl_loss, _logit_adver_loss,\
                 _L2_loss,_accuracy,summary_str = sess.run([global_step,train_op,total_loss,\
                                                            logit_cl_loss,logit_adver_loss,\
