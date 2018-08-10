@@ -330,7 +330,7 @@ def run_training(number_of_classes = 5,\
                 if ((step % 800 ==0) and step>0) or (step +1) == MAX_STEP:
                     checkpoint_path = os.path.join(logs_train_dir,'modelvgg.ckpt')
                     saver.save(sess,checkpoint_path)
-                    print('%.2f sec/step'.format((time.time()-start_time)/(step+1e-5)))
+                    print('%.2f sec/step'%((time.time()-start_time)/(step+1e-5)))
             coord.request_stop()
             coord.join(threads)
         sess.close()
