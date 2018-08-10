@@ -322,12 +322,12 @@ def run_training(number_of_classes = 5,\
                                                            L2_loss,train_accuracy,summary_op],\
                                                            feed_dict=feed_vars)
                 #每迭代50次，打印出一次结果
-                if step %  50 == 0:
+                if step %  100 == 0:
                     print('Step %d, total_loss = %.2f, cl_loss=%.2f, adver_loss=%.2f, L2_loss=%.2f, accuracy = %.3f'\
                           %(_global_step, _total_loss,_logit_cl_loss, _logit_adver_loss, _L2_loss, _accuracy )) 
                     train_writer.add_summary(summary_str,_global_step)
                 #每迭代700次，利用saver.save()保存一次模型文件，以便测试的时候使用
-                if ((step % 800 ==0) and step>0) or (step +1) == MAX_STEP:
+                if ((step % 1200 ==0) and step>0) or (step +1) == MAX_STEP:
                     checkpoint_path = os.path.join(logs_train_dir,'modelvgg.ckpt')
                     saver.save(sess,checkpoint_path)
                     print('%.2f sec/step'%((time.time()-start_time)/(step+1e-5)))
