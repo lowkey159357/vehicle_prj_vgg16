@@ -28,7 +28,7 @@ def parse_args(check=True):
     parser.add_argument('--sigma', type=float, default=0.6)
     parser.add_argument('--num_epoc', type=int,default=1)
     parser.add_argument('--learning_rate', type=float, default=0.05)
-	parser.add_argument('--learning_rate_decay', type=float, default=0.90)
+    parser.add_argument('--learning_rate_decay', type=float, default=0.90)
     parser.add_argument('--num_train_img', type=int, default=43971)
     parser.add_argument('--batch_size', type=int, default=16)
 
@@ -43,7 +43,7 @@ if __name__ == '__main__':
                  hide_prob = FLAGS.hide_prob,\
                  batch_size=FLAGS.batch_size,\
                  learning_rate=FLAGS.learning_rate,\
-				 learning_rate_decay=FLAGS.learning_rate_decay,\
+                 learning_rate_decay=FLAGS.learning_rate_decay,\
                  num_train_img=FLAGS.num_train_img,\
                  dataset_dir=FLAGS.dataset_dir,\
                  logs_train_dir=FLAGS.logs_train_dir,\
