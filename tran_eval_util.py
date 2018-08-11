@@ -186,11 +186,18 @@ def losses(logits_cl,logits_adver,labels_hot,label_advers_hot,number_of_classes)
         tf.summary.scalar(scope.name + "/total_loss", total_loss)     
     return total_loss,logit_cl_loss,logit_adver_loss,regularization_loss  
 
-def trainning(loss, learning_rate):
+def trainning(loss,learning_rate_ini,decay_steps,learning_rate_decay):
     with tf.name_scope("optimizer"):
-        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         global_step = tf.Variable(0, name="global_step", trainable=False, dtype=tf.int64)
+        learning_rate=tf.train.exponential_decay(learning_rate_ini,\
+                                    global_step,\
+                                    decay_steps,\
+                                    learning_rate_decay,\
+                                    staircase=True,\
+                                    name='exp_decay_learning_rate')
+        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         train_op = optimizer.minimize(loss, global_step=global_step)
+        tf.summary.scalar("optimizer/learning_rate", learning_rate)
     return train_op, global_step 
 
 def evaluation(logits, labels_hot):
@@ -207,6 +214,7 @@ def evaluation(logits, labels_hot):
 def run_training(number_of_classes = 5,\
                  batch_size=10,\
                  learning_rate=0.00001,\
+                 learning_rate_decay=0.9,\
                  num_train_img=90,\
                  num_epoc=200,\
                  hide_prob=0.25,\
@@ -261,7 +269,8 @@ def run_training(number_of_classes = 5,\
                                                                    label_advers_hot,\
                                                                    number_of_classes)
         
-        train_op, global_step = trainning(total_loss,learning_rate)
+        decay_steps=num_train_img//batch_size
+        train_op, global_step = trainning(total_loss,learning_rate,decay_steps,learning_rate_decay)
         train_accuracy = (evaluation(logits_cl,label_hot) + evaluation(logits_adver,label_advers_hot))/2.0
         # 
         config = tf.ConfigProto()                                    # 配置GPU参数 
@@ -407,7 +416,8 @@ def run_eval(val_loop=2,number_of_classes = 5,batch_size=40,sigma=0.6,checkpoint
                                                                                               feed_dict=feed_vars)
                 accuracy_list.append(_accuracy)
                 accuracy_list.append(_accuracy_adver)
-                print( 'setp:%d, test, (accuracy_A, accuracy_B) = (%.3f, %.3f)'%( i, _accuracy,_accuracy_adver) )
+                if (i%16==0):
+                    print( 'setp:%d, test, (accuracy_A, accuracy_B) = (%.3f, %.3f)'%( i, _accuracy,_accuracy_adver) )
                 #print('step:{}, test_real_label is:{}'.format(i,_label_val) )
                 #print('step:{}, test_prob_label is:{}'.format(i, _prob_max) )
                 

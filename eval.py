@@ -13,8 +13,6 @@ import argparse
 
 from tran_eval_util import run_eval
 
-#dataset_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\image_dataset"
-#checkpoint_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\out_log"
 
 def parse_args(check=True):
     parser = argparse.ArgumentParser()
@@ -22,7 +20,7 @@ def parse_args(check=True):
     parser.add_argument('--dataset_dir', type=str,default=' ')
     parser.add_argument('--checkpoint_dir', type=str, default=' ')    
     parser.add_argument('--number_of_classes', type=int,default= 764)
-    parser.add_argument('--sigma', type=float, default= 0.5)
+    parser.add_argument('--sigma', type=float, default= 0.6)
     parser.add_argument('--val_loop', type=int,default= 256)
     parser.add_argument('--batch_size', type=int, default= 16)
 

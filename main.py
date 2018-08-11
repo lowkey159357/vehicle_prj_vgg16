@@ -8,9 +8,6 @@ from __future__ import print_function
 import argparse
 import os
 
-#dataset_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\image_dataset"
-#logs_train_dir = "C:\\jupyter_work\lastweek\\vgg_16_adverse_small_dataset\\out_log"
-#checkpoint_dir=os.path.join(logs_train_dir, 'model.ckpt-89560')
 
 def parse_args(check=True):
     parser = argparse.ArgumentParser()
@@ -19,14 +16,14 @@ def parse_args(check=True):
     parser.add_argument('--logs_train_dir', type=str, default=' ')
     parser.add_argument('--checkpoint_dir', type=str, default=' ') 
     parser.add_argument('--checkpoint_exclude_scopes', type=str, default=' ')
-    parser.add_argument('--max_epoc', type=int, default=(65//5))
-    parser.add_argument('--num_epoc', type=int, default=5)
-    parser.add_argument('--learning_rate', type=float, default=0.001)
+    parser.add_argument('--max_epoc', type=int, default=60)
+    parser.add_argument('--num_epoc', type=int, default=1)
+    parser.add_argument('--learning_rate', type=float, default=0.05)
     parser.add_argument('--num_train_img', type=int, default=43971)
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--number_of_classes', type=int,default=764)
-    parser.add_argument('--hide_prob', type=float, default = 0.25)
-    parser.add_argument('--sigma', type=float, default = 0.5)
+    parser.add_argument('--hide_prob', type=float, default = 0.10)
+    parser.add_argument('--sigma', type=float, default = 0.6)
     # eval
     parser.add_argument('--val_loop', type=int,default=256)
 
@@ -50,7 +47,7 @@ if __name__ == '__main__':
     os.chdir(w_d)
 
     for i in range(FLAGS.max_epoc):
-        print('***************************epock {}*********************************'.format(i*5))
+        print('***************************epock {}*********************************'.format(i))
         # train 1 epoch
         print('################    train    ################')
         p = os.popen(train_cmd.format(**{'dataset_dir': FLAGS.dataset_dir, 'logs_train_dir': FLAGS.logs_train_dir,
