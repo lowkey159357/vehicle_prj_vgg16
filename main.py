@@ -18,12 +18,12 @@ def parse_args(check=True):
     parser.add_argument('--checkpoint_exclude_scopes', type=str, default=' ')
     parser.add_argument('--max_epoc', type=int, default=60)
     parser.add_argument('--num_epoc', type=int, default=1)
-    parser.add_argument('--learning_rate', type=float, default=0.05)
+    parser.add_argument('--learning_rate', type=float, default=0.0001)
     parser.add_argument('--num_train_img', type=int, default=43971)
     parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--number_of_classes', type=int,default=764)
     parser.add_argument('--hide_prob', type=float, default = 0.10)
-    parser.add_argument('--sigma', type=float, default = 0.6)
+    parser.add_argument('--sigma', type=float, default = 0.65)
     # eval
     parser.add_argument('--val_loop', type=int,default=256)
 
