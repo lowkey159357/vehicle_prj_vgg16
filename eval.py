@@ -20,7 +20,7 @@ def parse_args(check=True):
     parser.add_argument('--dataset_dir', type=str,default=' ')
     parser.add_argument('--checkpoint_dir', type=str, default=' ')    
     parser.add_argument('--number_of_classes', type=int,default= 764)
-    parser.add_argument('--sigma', type=float, default= 0.6)
+    parser.add_argument('--sigma', type=float, default= 0.65)
     parser.add_argument('--val_loop', type=int,default= 256)
     parser.add_argument('--batch_size', type=int, default= 16)
 
