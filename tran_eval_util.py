@@ -10,6 +10,7 @@ import time
 import random
 import re
 import tensorflow as tf
+from tensorflow.python.ops import control_flow_ops
 slim = tf.contrib.slim
 
 import cv2 
@@ -196,7 +197,12 @@ def trainning(loss,learning_rate_ini,decay_steps,learning_rate_decay):
                                     staircase=True,\
                                     name='exp_decay_learning_rate')
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-        train_op = optimizer.minimize(loss, global_step=global_step)
+        #train_op = optimizer.minimize(loss, global_step=global_step)
+        train_op = slim.learning.create_train_op(loss, optimizer, global_step = global_step)
+        update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+        if update_ops:
+            updates = tf.group(*update_ops)
+            loss = control_flow_ops.with_dependencies([updates], loss)
         tf.summary.scalar("optimizer/learning_rate", learning_rate)
     return train_op, global_step 
 
